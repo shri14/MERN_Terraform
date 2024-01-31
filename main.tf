@@ -72,27 +72,29 @@ resource "aws_instance" "frontend" {
   tags = {
     Name = each.key
   }
-
-  provisioner "remote-exec" {
-    connection {
-      type        = "ssh"
-      user        = "ubuntu"
-      private_key = file(local_file.frontend_private_key.filename)
-      host        = self.public_ip
-    }
-
-    inline = [
-      "sudo apt update -y",
-      "sudo apt install -y curl",
-      "curl -s https://deb.nodesource.com/setup_18.x | sudo bash",
-      "sudo apt install -y nodejs",
-      "node --version",
-      " git clone https://github.com/shri14/TravelMemoryapp.git",
-      "cd TravelMemoriesApp/frontend && sudo npm install",
-      "sudo npm start & disown", # Run npm start in the background and disown the process
-    ]
-  }
 }
+
+
+#   provisioner "remote-exec" {
+#     connection {
+#       type        = "ssh"
+#       user        = "ubuntu"
+#       private_key = file(local_file.frontend_private_key.filename)
+#       host        = self.public_ip
+#     }
+
+#     inline = [
+#       "sudo apt update -y",
+#       "sudo apt install -y curl",
+#       "curl -s https://deb.nodesource.com/setup_18.x | sudo bash",
+#       "sudo apt install -y nodejs",
+#       "node --version",
+#       " git clone https://github.com/shri14/TravelMemoryapp.git",
+#       "cd TravelMemoriesApp/frontend && sudo npm install",
+#       "sudo npm start & disown", # Run npm start in the background and disown the process
+#     ]
+#   }
+# }
 
 
 
