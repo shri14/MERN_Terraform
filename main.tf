@@ -41,7 +41,14 @@ resource "aws_security_group" "FrontendSG" {
     cidr_blocks = [var.https_cder]
 
   }
+  ingress {
+    from_port   = var.backend_ingrss
+    to_port     = var.backend_ingrss
+    protocol    = "tcp"
+    cidr_blocks = [var.backend_cider]
+  }
 }
+
 
 resource "aws_key_pair" "frontendkey" {
   key_name   = "frontend_key"
@@ -72,32 +79,23 @@ resource "aws_instance" "frontend" {
   tags = {
     Name = each.key
   }
+
 }
 
-
-#   provisioner "remote-exec" {
-#     connection {
-#       type        = "ssh"
-#       user        = "ubuntu"
-#       private_key = file(local_file.frontend_private_key.filename)
-#       host        = self.public_ip
-#     }
-
-#     inline = [
-#       "sudo apt update -y",
-#       "sudo apt install -y curl",
-#       "curl -s https://deb.nodesource.com/setup_18.x | sudo bash",
-#       "sudo apt install -y nodejs",
-#       "node --version",
-#       " git clone https://github.com/shri14/TravelMemoryapp.git",
-#       "cd TravelMemoriesApp/frontend && sudo npm install",
-#       "sudo npm start & disown", # Run npm start in the background and disown the process
-#     ]
+# provisioner "remote-exec" {
+#   connection {
+#     type        = "ssh"
+#     user        = "ubuntu" # Verify this user exists
+#     private_key = file(local_file.frontend_private_key.filename)
+#     host        = self.public_ip
+#     # Consider more specific SSH arguments like:
+#     # ssh_args    = ["-o StrictHostKeyChecking=no"]
 #   }
+#   inline = [
+#     "sudo apt update -y",
+#     "sudo apt-get install -y docker.io",
+#   ]
 # }
-
-
-
 
 
 # resource "aws_instance" "Backend" {
@@ -116,15 +114,8 @@ resource "aws_instance" "frontend" {
 #       host        = self.public_ip
 #     }
 #     inline = [
-#       "sudo apt update -y",
-#       "sudo cd /home/ubuntu",
-#       "sudo apt install -y curl",
-#       "sudo curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -",
-#       "sudo apt install nodejs -y",
-#       "sudo node --version",
-#       "sudo git clone https://github.com/UnpredictablePrashant/TravelMemoriesApp.git",
-#       "sudo cd TravelMemoriesApp/backend",
-#       "sudo npm install && node index.js",
+#       
+
 
 #     ]
 #   }

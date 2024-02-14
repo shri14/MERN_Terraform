@@ -42,6 +42,16 @@ variable "https_cder" {
   default = "0.0.0.0/0"
 
 }
+variable "backend_cider" {
+  type    = string
+  default = "0.0.0.0/0"
+
+}
+variable "backend_ingrss" {
+  type    = number
+  default = 5000
+}
+
 variable "ami" {
   type    = string
   default = "ami-03f4878755434977f"
